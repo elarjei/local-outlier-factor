@@ -25,7 +25,7 @@ def calcLOF():
     lof.np.set_printoptions(precision=2, suppress=True)
     print(proxMatrix)
 
-    print('\n\n#2 Nearest Matrix sejauh K\n')
+    print('\n\n#2 Menentukan Nearest sebanyak K\n')
     K = input('Ukuran K: ')
     idxM = lof.idx_matrix(proxMatrix.shape[0])
     lof.nearest_matrix(proxMatrix, idxM)
@@ -45,11 +45,21 @@ def calcLOF():
     print(avgRel)
 
     print('\n\n#5 Nilai Outlier\n')
-    batas = input('Nilai threshold: ')
+    threshold = input('Nilai threshold: ')
     print('')
-    outlier = avgRel[avgRel > batas]
-    totalOutlier = outlier.shape[0]
-    print(outlier.reshape(totalOutlier, 1))
+
+    bigger = avgRel[avgRel > threshold]
+    smaller = avgRel[avgRel < threshold]
+    totBigger = bigger.shape[0]
+    totSmaller = avgRel.shape[0] - totBigger
+
+    if totBigger > totSmaller:
+        print('\nNilai outlier rendah yaitu\n')
+        print(smaller.reshape(totSmaller, 1))
+    else:
+        print('\nNilai outlier tinggi yaitu\n')
+        print(bigger.reshape(totBigger, 1))
+
     print('\n________________________________\n')
 
 
